@@ -1,3 +1,7 @@
+"""
+Environment -related: class and methods.
+E.g. the site URL
+"""
 import pytest
 import requests
 # import json
