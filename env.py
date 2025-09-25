@@ -29,5 +29,3 @@ def env_():
 @pytest.fixture()
 def env():
     return env_()
-
-
