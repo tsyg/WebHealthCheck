@@ -1,0 +1,5 @@
+[MASTER]
+#ignore=tests
+
+[MESSAGES CONTROL]
+disable=E0401  # Disable "Unable to import" (import-error)
