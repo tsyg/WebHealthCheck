@@ -4,17 +4,24 @@ E.g. the site URL
 """
 import pytest
 import requests
+
+
 # import json
 
 
 class Env:
+    """ Environment class
+    - what kind of site to we test: URL, name
+    """
     def __init__(self, name: str, host_url: str):
         self.name = name
         self.host_url = host_url
         self.session = None
 
-
-    def get(self, url):
+    def get(self, url: str):
+        """ Performs GET request to the given url
+        @param url - the URL requested
+        """
         return requests.get(url)
 
     def get_endpoint(self, endpoint: str):
@@ -32,4 +39,8 @@ def env_():
 
 @pytest.fixture()
 def env():
+    """
+    Fixture providing environment into tests
+    returns Evn
+    """
     return env_()
