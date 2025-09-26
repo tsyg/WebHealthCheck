@@ -2,7 +2,7 @@
  Tests methods themselves
 """
 from bs4 import BeautifulSoup  # https://www.crummy.com/software/BeautifulSoup/bs4/doc/
-from env import Env, env, env_
+from env import Env, env, env_  # pylint: disable=unused-import
 
 
 def grab_all_links(htm: str):
@@ -22,7 +22,7 @@ def grab_all_links(htm: str):
     return links
 
 
-def link_to_full_url(env: Env, link: str):
+def link_to_full_url(env: Env, link: str):  # pylint: disable=redefined-outer-name
     """ Convert link to full format:
     Not changing those already in the full format
     Prevents doubling slash - from host ending and link start symbol
@@ -55,7 +55,7 @@ def pytest_generate_tests(metafunc):
         metafunc.parametrize("link", selected_links, ids=selected_links)
 
 
-def test_link_valid(env, link: str):
+def test_link_valid(env, link: str):  # pylint: disable=redefined-outer-name
     """ Ensure the link s valid - otherwise assert """
     print(f" >> testing link {link} --{link[-1]}")
     # assert "#" not in link  ### TO MAKE IT FAIL
