@@ -2,7 +2,7 @@
  Tests methods themselves
 """
 from bs4 import BeautifulSoup  # https://www.crummy.com/software/BeautifulSoup/bs4/doc/
-from env import Env, env_
+from env import Env, env, env_
 
 
 def grab_all_links(htm: str):
@@ -58,18 +58,18 @@ def pytest_generate_tests(metafunc):
 def test_link_valid(env, link: str):
     """ Ensure the link s valid - otherwise assert """
     print(f" >> testing link {link} --{link[-1]}")
-    assert "#" not in link  ### TO MAKE IT FAIL
+    # assert "#" not in link  ### TO MAKE IT FAIL
     res = env.get(link)
     assert res.status_code == 200
 
 
-def main():
-    """ main function is used to have variables inside it local """
-    htm = env_().get_endpoint('/').text
-    for link in grab_all_links(htm):
-        # print(link)
-        print(link_to_full_url(env=env_(), link=link))
-
-
-if __name__ == "__main__":
-    main()
+# def main():
+#     """ main function is used to have variables inside it local """
+#     htm = env_().get_endpoint('/').text
+#     for link in grab_all_links(htm):
+#         # print(link)
+#         print(link_to_full_url(env=env_(), link=link))
+#
+#
+# if __name__ == "__main__":
+#     main()
