@@ -16,7 +16,7 @@ def grab_all_links(htm: str):
     # print(" ************** END-OF-Prettify *******************  ")
 
     links = [link.get('href') for link in soup.find_all('a')
-             if link not in ['/', ""]   # skip trash ones
+             if link not in ['/', ""]  # skip trash ones
              ]
     print(f"==>> Found {len(links)} links")
     return links
@@ -29,12 +29,12 @@ def link_to_full_url(env: Env, link: str):
     """
     if link.startswith("https://"):
         return link
-    else:
-        # remove extra slash: when host_url ends with '/' and the link itself
-        if env.host_url[-1:] == '/' and link[0] == '/':
-            return env.host_url[:-1] + link
-        else:
-            return env.host_url + link
+
+    # remove extra slash: when host_url ends with '/' and the link itself
+    if env.host_url[-1:] == '/' and link[0] == '/':
+        return env.host_url[:-1] + link
+
+    return env.host_url + link
 
 
 def pytest_generate_tests(metafunc):
@@ -58,8 +58,13 @@ def test_link_valid(env, link: str):
     assert res.status_code == 200
 
 
-if __name__ == "__main__":
+def main():
+    """ main function is used to have variables inside it local """
     htm = env_().get_endpoint('/').text
     for link in grab_all_links(htm):
         # print(link)
         print(link_to_full_url(env=env_(), link=link))
+
+
+if __name__ == "__main__":
+    main()
