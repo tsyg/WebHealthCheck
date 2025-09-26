@@ -38,6 +38,10 @@ def link_to_full_url(env: Env, link: str):
 
 
 def pytest_generate_tests(metafunc):
+    """
+    pytest_generate_tests generates data-driven tests for the hardcoded parameters name.
+    https://docs.pytest.org/en/stable/example/parametrize.html
+    """
     print("** pytest_generate_tests ** ")
     # print(metafunc.fixturenames)
 
@@ -45,13 +49,14 @@ def pytest_generate_tests(metafunc):
         html = env_().get_endpoint('').text
         links = [link_to_full_url(env=env_(), link=link) for link in grab_all_links(html)]
 
-        selected_links = links  # [l for l in links if 'e' in l and 'i' in l]  # 'e','i' used to filter only some links
+        selected_links = links
         print(links)
         print(f"{len(links)} / {len(selected_links)}")
         metafunc.parametrize("link", selected_links, ids=selected_links)
 
 
 def test_link_valid(env, link: str):
+    """ Ensure the link s valid - otherwise assert """
     print(f" >> testing link {link} --{link[-1]}")
     assert "#" not in link  ### TO MAKE IT FAIL
     res = env.get(link)
