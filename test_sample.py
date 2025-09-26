@@ -1,8 +1,8 @@
 """
  Tests methods themselves
 """
-from env import Env, env, env_
 from bs4 import BeautifulSoup  # https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+from env import Env, env_
 
 
 def grab_all_links(htm: str):
@@ -42,14 +42,18 @@ def pytest_generate_tests(metafunc):
     # print(metafunc.fixturenames)
 
     if "link" in metafunc.fixturenames:
-        htm = env_().get_endpoint('').text
-        links = [link_to_full_url(env=env_(), link=link) for link in grab_all_links(htm)]
+        html = env_().get_endpoint('').text
+        links = [link_to_full_url(env=env_(), link=link) for link in grab_all_links(html)]
+
+        selected_links = links  # [l for l in links if 'e' in l and 'i' in l]  # 'e','i' used to filter only some links
         print(links)
-        metafunc.parametrize("link", links, ids=links)
+        print(f"{len(links)} / {len(selected_links)}")
+        metafunc.parametrize("link", selected_links, ids=selected_links)
 
 
 def test_link_valid(env, link: str):
     print(f" >> testing link {link} --{link[-1]}")
+    assert "#" not in link  ### TO MAKE IT FAIL
     res = env.get(link)
     assert res.status_code == 200
 
