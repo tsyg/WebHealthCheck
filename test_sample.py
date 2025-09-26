@@ -1,8 +1,15 @@
+"""
+ Tests methods themselves
+"""
 from env import Env, env, env_
+from bs4 import BeautifulSoup  # https://www.crummy.com/software/BeautifulSoup/bs4/doc/
 
 
 def grab_all_links(htm: str):
-    from bs4 import BeautifulSoup  # https://www.crummy.com/software/BeautifulSoup/bs4/doc/
+    """
+    Parse the HTML code. extract all links.
+    return the list of urls
+    """
     print(" ************** GRAB-ALL-LINKS *******************  ")
     soup = BeautifulSoup(htm, 'html.parser')
     # print(soup.prettify())
@@ -52,4 +59,3 @@ if __name__ == "__main__":
     for link in grab_all_links(htm):
         # print(link)
         print(link_to_full_url(env=env_(), link=link))
-
