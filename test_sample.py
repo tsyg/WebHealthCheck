@@ -18,6 +18,9 @@ def grab_all_links(htm: str):
     links = [link.get('href') for link in soup.find_all('a')
              if link not in ['/', ""]  # skip trash ones
              ]
+
+    links = [l for l in links if "www.w3" not in l]  # reduce number  DEBUG-ONLY. TODO: Remove
+
     print(f"==>> Found {len(links)} links")
     return links
 
