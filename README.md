@@ -9,9 +9,9 @@ pytest test_samples.py
 ```
 
 ## Useful pytest options
-To generate htm report, run failed tests (those previously failed) first
+To generate htm report (that can be just shared in single-file), run failed tests (those previously failed) first
 ```commandline
-pytest --ff .\test_sample.py  --html=your_report_filename.htm
+pytest --ff .\test_sample.py  --html=your_report_filename.htm --self-contained-html
 ```
 
 to explicitly cleanup previous run results
