@@ -30,7 +30,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Get current timestamp
       id: timestamp
-      run: echo "::set-output tstamp=timestamp::$(date +'%Y-%m-%d_%H%M')"
+      run: echo "tstamp=$(date +%Y-%m-%d_%H%M)"
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -39,4 +39,4 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest --collect-only --lf .\test_sample.py --cache-clear  --html=test_sample_report_"$tstamp".htm
+        pytest --collect-only --lf .\test_sample.py --cache-clear  --html=test_sample_report_$tstamp.htm
