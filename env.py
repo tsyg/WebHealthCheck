@@ -29,7 +29,7 @@ class Env:
         endpoint is part of URL to be applied with host
         return requests.Response
         """
-        return requests.get(f'{self.host_url}{endpoint}')   #  "data": json.loads(res.text)
+        return requests.get(f'{self.host_url}{endpoint}')  # "data": json.loads(res.text)
 
 
 def env_():
