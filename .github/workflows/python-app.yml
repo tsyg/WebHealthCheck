@@ -39,7 +39,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest --lf .\test_sample.py --cache-clear  --html="test_sample_report_($tstamp).htm"
+        pytest --lf ./test_sample.py --cache-clear  --html="test_sample_report_($tstamp).htm"
     - name: save report
       uses: actions/upload-artifact@v4
       with:
