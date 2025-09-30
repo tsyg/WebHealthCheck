@@ -30,7 +30,7 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Get current timestamp
       id: timestamp
-      run: echo "tstamp=$(date +%Y-%m-%d_%H%M)";pwd
+      run: export tstamp="$(date +%Y-%m-%d_%H%M)";pwd;echo "tstamp is "+$tstamp
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -39,9 +39,10 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest --lf ./test_sample.py --cache-clear  --html=test_sample_report_.htm --self-contained-html
+        # run previously failed tests first, generate HTML report with sll styles inside it
+        pytest --ff ./test_sample.py --cache-clear  --html=test_sample_report_$tstamp.htm --self-contained-html
     - name: save report
       uses: actions/upload-artifact@v4
       with:
-        name: test_sample_report_.htm
-        path: test_sample_report_.htm
+        name: test_sample_report_$tstamp.htm
+        path: test_sample_report_$tstamp.htm
