@@ -43,14 +43,21 @@ jobs:
         export tstamp=${{steps.timestamp.outputs.tstamp}}
         echo "tstamp is "$tstamp
         pytest --ff ./test_sample.py --cache-clear  --html=test_sample_report_$tstamp.htm --self-contained-html
-    - name: save report
-      uses: actions/upload-artifact@v4
-      with:
-        name: test_sample_report_${{steps.timestamp.outputs.tstamp}}.htm
-        path: test_sample_report_${{steps.timestamp.outputs.tstamp}}.htm
     - name: Build test report
       uses: simple-elf/allure-report-action@v1.7
       if: always()
       with:
         allure_history: allure-history
         allure_results: build/allure-results
+    - name: Publish allure report
+      uses: peaceiris/actions-gh-pages@v4
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: master
+        publish_dir: allure-history
+    - name: save report
+      uses: actions/upload-artifact@v4
+      with:
+        name: test_sample_report_${{steps.timestamp.outputs.tstamp}}.htm
+        path: test_sample_report_${{steps.timestamp.outputs.tstamp}}.htm
